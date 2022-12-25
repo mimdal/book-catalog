@@ -18,6 +18,9 @@ public class Book {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Version
+    private Integer version;
+
     @Column(nullable = false, unique = true)
     private String isbn;
 

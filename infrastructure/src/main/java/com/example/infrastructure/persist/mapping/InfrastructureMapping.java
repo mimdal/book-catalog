@@ -17,13 +17,16 @@ import java.util.stream.Collectors;
 public interface InfrastructureMapping {
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "version", ignore = true)
     Book toBook(BookModel bookModel);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "version", ignore = true)
     Author toAuthor(AuthorModel authorModel);
 
     BookModel toBookModel(Book bookEntity);
 
+    @Mapping(target = "version", ignore = true)
     void update(@MappingTarget Book bookEntity, BookModel bookModel);
 
 

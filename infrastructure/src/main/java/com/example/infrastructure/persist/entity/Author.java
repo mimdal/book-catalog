@@ -15,6 +15,9 @@ public class Author {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Version
+    private Integer version;
+
     @Column(nullable = false)
     private String name;
 

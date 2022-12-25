@@ -1,0 +1,68 @@
+plugins {
+    id 'org.springframework.boot' version '2.4.3'
+    id 'com.google.cloud.tools.jib' version '3.3.1'
+    id 'io.spring.dependency-management' version '1.1.0'
+    id 'java'
+}
+
+group 'com.example'
+version '1.0-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+    }
+}
+
+dependencies {
+    implementation project(':api')
+    implementation project(':domain')
+    implementation project(':infrastructure')
+
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+    implementation 'io.springfox:springfox-boot-starter:3.0.0'
+
+    implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'org.liquibase:liquibase-core:4.18.0'
+    implementation 'org.apache.commons:commons-lang3:3.0'
+    implementation 'org.apache.commons:commons-collections4:4.4'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-validation'
+    testImplementation 'com.h2database:h2:1.4.200'
+
+    compileOnly 'jakarta.validation:jakarta.validation-api:2.0.2'
+}
+
+
+
+test {
+    useJUnitPlatform()
+}
+
+jib {
+    from {
+        image = "joengenduvel/jre17:latest"
+    }
+    to {
+        image = "book-catalog:latest"
+    }
+    container {
+        jvmFlags = ['-Xms512m', '-Xdebug']
+        mainClass = 'com.example.app.ApplicationEntryPoint'
+        args = []
+        ports = ['8080/tcp']
+    }
+}
+jib.to.image = 'mimdal/book-catalog'

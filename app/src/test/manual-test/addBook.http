@@ -1,0 +1,20 @@
+POST http://localhost:8080/books
+Content-Type: application/json
+
+{
+  "authors": [
+    {
+      "bio": "A little is better than of anything",
+      "name": "Hans Kristan Anderson-4"
+    },
+    {
+      "bio": "A little is better than of anything222222222222",
+      "name": "Hans Kristan Anderson-44"
+    }
+  ],
+  "isbn": "2654-23-klj1221-022300-11222333",
+  "summary": "sumamary of boooks 3333",
+  "title": "ShahNameh-33333333"
+}
+
+###

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.18.xsd">
+
+    <changeSet id="1671567443614-1" author="mimdal">
+        <preConditions onFail="MARK_RAN" onError="MARK_RAN">
+            <not>
+                <tableExists tableName="books"/>
+            </not>
+        </preConditions>
+        <createTable tableName="books" schemaName="public">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_books"/>
+            </column>
+            <column name="isbn" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="summary" type="VARCHAR(1000)"/>
+        </createTable>
+        <addUniqueConstraint columnNames="isbn" constraintName="uc_books_isbn" tableName="books"/>
+    </changeSet>
+
+    <changeSet id="1671605399849-2" author="mimdal">
+        <preConditions onFail="MARK_RAN" onError="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="book_seq" schemaName="public"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="book_seq" startValue="1" schemaName="public" incrementBy="1"/>
+    </changeSet>
+
+    <changeSet id="1671567556147-3" author="mimdal">
+        <preConditions onFail="MARK_RAN" onError="MARK_RAN">
+            <not>
+                <tableExists tableName="authors" schemaName="public"/>
+            </not>
+        </preConditions>
+        <createTable tableName="authors" schemaName="public">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_authors"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bio" type="CLOB"/>
+            <column name="book_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseColumnNames="book_id" baseTableName="authors" constraintName="FK_AUTHORS_ON_BOOK"
+                                 referencedColumnNames="id" referencedTableName="books"/>
+    </changeSet>
+
+    <changeSet id="1671605528764-4" author="mimdal">
+        <preConditions onFail="MARK_RAN" onError="MARK_RAN">
+            <not>
+                <tableExists tableName="auth_seq" schemaName="public"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="auth_seq" startValue="1" schemaName="public" incrementBy="1"/>
+    </changeSet>
+
+
+</databaseChangeLog>

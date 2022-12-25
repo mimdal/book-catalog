@@ -1,0 +1,34 @@
+version: '3'
+
+volumes:
+  dbdata:
+
+services:
+
+  db:
+    container_name: postgresql
+    image: 'postgres:13.9-alpine'
+    ports: [ '5432:5432' ]
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB:postgres
+      - POSTGRES_USER:book_catalog
+      - POSTGRES_PASSWORD:my_password
+
+  app:
+    container_name: book-catalog
+    image: 'mimdal/book-catalog:latest'
+    ports: [ '8080:8080' ]
+    build:
+      context: .
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres?currentSchema=public
+      - SPRING_DATASOURCE_USERNAME=book_catalog
+      - SPRING_DATASOURCE_PASSWORD=my_password
+
+
+
+

@@ -1,0 +1,6 @@
+rootProject.name = 'book-catalog'
+include 'api'
+include 'app'
+include 'domain'
+include 'infrastructure'
+

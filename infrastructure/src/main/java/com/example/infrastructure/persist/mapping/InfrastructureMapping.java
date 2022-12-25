@@ -2,6 +2,7 @@ package com.example.infrastructure.persist.mapping;
 
 import com.example.domain.model.AuthorModel;
 import com.example.domain.model.BookModel;
+import com.example.domain.model.BookSearchModel;
 import com.example.domain.model.BookSearchModelResult;
 import com.example.infrastructure.persist.entity.Author;
 import com.example.infrastructure.persist.entity.Book;
@@ -37,5 +38,17 @@ public interface InfrastructureMapping {
         return result;
     }
 
+    @Mapping(target = "title", source = "bookTitle")
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "version", ignore = true)
+    @Mapping(target = "isbn", ignore = true)
+    @Mapping(target = "summary", ignore = true)
+    @Mapping(target = "authors", expression = "java(java.util.Collections.singleton(toAuthor(searchModel.getAuthorName())))")
+    Book toBook(BookSearchModel searchModel);
 
+    @Mapping(target = "name", source = "authorName")
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "version", ignore = true)
+    @Mapping(target = "bio", ignore = true)
+    Author toAuthor(String authorName);
 }

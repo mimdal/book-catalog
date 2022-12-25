@@ -5,13 +5,16 @@ import com.example.domain.model.BookModel;
 import com.example.domain.model.BookSearchModel;
 import com.example.domain.model.BookSearchModelResult;
 import com.example.domain.persist.PersistenceService;
+import com.example.infrastructure.persist.entity.Author;
 import com.example.infrastructure.persist.entity.Book;
 import com.example.infrastructure.persist.mapping.InfrastructureMapping;
 import com.example.infrastructure.persist.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,10 +70,21 @@ public class PersistenceServiceImpl implements PersistenceService {
 
     @Override
     public BookSearchModelResult findAllBooks(BookSearchModel searchModel) {
-        List<Book> books = repository.findByBookTitleAndAuthorName(
-                searchModel.getBookTitle(), searchModel.getAuthorName(),
-                PageRequest.of(searchModel.getPage(), searchModel.getSize())
-        );
+        ExampleMatcher exampleMatcher = ExampleMatcher
+                .matchingAny()
+                .withIgnoreNullValues()
+                .withIgnoreCase("title", "authors.name")
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+
+        Book book = mapping.toBook(searchModel);
+        book.setTitle(searchModel.getBookTitle());
+        Author author  = new Author();
+        author.setName(searchModel.getAuthorName());
+        book.setAuthors(Collections.singleton(author));
+
+        Example<Book> example = Example.of(book, exampleMatcher);
+        List<Book> books = repository.findAll(example);
+
         return mapping.toBookSearchModelResult(books);
     }
 

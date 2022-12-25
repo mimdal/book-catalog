@@ -1,7 +1,6 @@
 package com.example.app.rest;
 
-import com.example.api.request.Author;
-import com.example.api.request.NewBookRequest;
+import com.example.api.model.Author;
 import com.example.api.request.UpdateBookRequest;
 import com.example.app.rest.util.ResetDatabase;
 import com.example.infrastructure.persist.entity.Book;
@@ -15,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -51,7 +51,7 @@ public class BookResourceUpdateBookITest {
             "Then: the update operation get done and 204 status code send to the client")
     void testUpdateBookTheBookIsUpdated() throws Exception {
         String author = "Alexandra Ripley";
-        String isbn = "123-1234567890";
+        String isbn = "123-1234569990";
         String bookName = "Scarlett";
         String summary = "Scarlett is a 1991 novel by Alexandra Ripley, written as a sequel to Margaret Mitchell's 1936 novel, " +
                 "Gone with the Wind. The book debuted on The New York Times Best Seller list.";
@@ -83,7 +83,7 @@ public class BookResourceUpdateBookITest {
 
         mockMvc.perform(MockMvcRequestBuilders
                 .put("/books/" + bookEntity.getId())
-                .contentType("application/json")
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(requestJson))
                 .andExpect(MockMvcResultMatchers.status()
                         .isNoContent());
@@ -118,7 +118,7 @@ public class BookResourceUpdateBookITest {
 
         mockMvc.perform(MockMvcRequestBuilders
                 .put("/books/1000")
-                .contentType("application/json")
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(requestJson))
                 .andExpect(MockMvcResultMatchers.status()
                         .isNotFound());

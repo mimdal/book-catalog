@@ -1,6 +1,6 @@
 package com.example.api.response;
 
-import com.example.api.request.Author;
+import com.example.api.model.Author;
 import lombok.Data;
 
 import java.util.Set;

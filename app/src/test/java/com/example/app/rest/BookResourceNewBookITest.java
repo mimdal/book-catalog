@@ -1,6 +1,6 @@
 package com.example.app.rest;
 
-import com.example.api.request.Author;
+import com.example.api.model.Author;
 import com.example.api.request.NewBookRequest;
 import com.example.infrastructure.persist.entity.Book;
 import com.example.infrastructure.persist.repository.BookRepository;
@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -59,7 +60,7 @@ class BookResourceNewBookITest {
 
         mockMvc.perform(MockMvcRequestBuilders
                 .post("/books")
-                .contentType("application/json")
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(requestJson))
                 .andExpect(MockMvcResultMatchers.status()
                         .isCreated());
@@ -102,7 +103,7 @@ class BookResourceNewBookITest {
 
         mockMvc.perform(MockMvcRequestBuilders
                 .post("/books")
-                .contentType("application/json")
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(requestJson))
                 .andExpect(MockMvcResultMatchers.status()
                         .isConflict());

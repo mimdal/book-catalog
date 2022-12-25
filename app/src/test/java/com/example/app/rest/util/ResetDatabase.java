@@ -5,6 +5,6 @@ import com.example.infrastructure.persist.repository.BookRepository;
 public class ResetDatabase {
 
     public static void deleteBookEntities(BookRepository repository) {
-        repository.deleteAllInBatch();
+        repository.deleteAll();
     }
 }

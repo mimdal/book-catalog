@@ -1,5 +1,6 @@
 package com.example.api.request;
 
+import com.example.api.model.Author;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;

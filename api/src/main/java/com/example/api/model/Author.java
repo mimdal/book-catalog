@@ -1,9 +1,6 @@
-package com.example.api.request;
+package com.example.api.model;
 
-import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.extern.jackson.Jacksonized;
 
 import javax.validation.constraints.NotEmpty;
 

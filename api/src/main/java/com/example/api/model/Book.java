@@ -1,14 +1,11 @@
-package com.example.api.response;
+package com.example.api.model;
 
-import com.example.api.model.Author;
 import lombok.Data;
 
 import java.util.Set;
 
 @Data
-public class NewBookResponse {
-
-    private Long id;
+public class Book {
 
     private String title;
 

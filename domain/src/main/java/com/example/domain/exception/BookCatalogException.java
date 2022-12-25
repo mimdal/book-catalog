@@ -8,14 +8,14 @@ public class BookCatalogException extends RuntimeException {
 
     private HttpStatus status;
 
-    public BookCatalogException(String message, HttpStatus status) {
+    public BookCatalogException(String message, int statusCode) {
         super(message);
-        this.status = status;
+        this.status = HttpStatus.valueOf(statusCode);
     }
 
-    public BookCatalogException(String message, HttpStatus status, Throwable cause) {
+    public BookCatalogException(String message, int statusCode, Throwable cause) {
         super(message, cause);
-        this.status = status;
+        this.status = HttpStatus.valueOf(statusCode);
     }
 
 }

@@ -10,4 +10,8 @@ public interface PersistenceService {
 
     BookModel save(BookModel book);
 
+    Optional<BookModel> findById(Long id);
+
+    Optional<BookModel> updateBook(BookModel book);
+
 }

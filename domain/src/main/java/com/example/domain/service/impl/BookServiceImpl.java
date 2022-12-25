@@ -7,10 +7,12 @@ import com.example.domain.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
 
@@ -20,11 +22,15 @@ public class BookServiceImpl implements BookService {
     public BookModel newBook(BookModel book) {
         Optional<BookModel> queryResult = persistenceService.findByIsbn(book.getIsbn());
         if (queryResult.isPresent()) {
-            throw new BookCatalogException("Entity was persisted before, entity id = " + queryResult.get().getId(),
-                    HttpStatus.CONFLICT);
+            throw new BookCatalogException("Entity was persisted before, entity id = " + queryResult.get().getId(), 409);
         } else {
             return persistenceService.save(book);
         }
+    }
+
+    @Override
+    public BookModel updateBook(BookModel book) {
+        return persistenceService.updateBook(book).get();
     }
 
 }

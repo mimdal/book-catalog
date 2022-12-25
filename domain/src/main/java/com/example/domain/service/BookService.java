@@ -7,4 +7,6 @@ public interface BookService {
 
     BookModel newBook(BookModel book);
 
+    BookModel updateBook(BookModel toBookModel);
+
 }

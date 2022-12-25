@@ -1,5 +1,6 @@
 package com.example.infrastructure.persist;
 
+import com.example.domain.exception.BookCatalogException;
 import com.example.domain.model.BookModel;
 import com.example.domain.persist.PersistenceService;
 import com.example.infrastructure.persist.entity.Book;
@@ -21,13 +22,34 @@ public class PersistenceServiceImpl implements PersistenceService {
     @Override
     public Optional<BookModel> findByIsbn(String isbn) {
         Optional<Book> bookEntity = repository.findByIsbnIgnoreCase(isbn);
-        return bookEntity.map(book -> mapping.toBookModel(bookEntity.get()));
+        return getBookModel(bookEntity);
     }
 
     @Override
     public BookModel save(BookModel bookModel) {
         bookModel.setId(repository.save(mapping.toBook(bookModel)).getId());
         return bookModel;
+    }
+
+    @Override
+    public Optional<BookModel> findById(Long id) {
+        Optional<Book> bookEntity = repository.findById(id);
+        return getBookModel(bookEntity);
+    }
+
+    @Override
+    public Optional<BookModel> updateBook(BookModel book) {
+        Optional<Book> bookEntity = repository.findById(book.getId());
+        if (bookEntity.isPresent()) {
+            mapping.update(bookEntity.get(), book);
+            return getBookModel(bookEntity);
+        } else {
+            throw new BookCatalogException("Update failed, entity not found! entity id = " + book.getId(), 404);
+        }
+    }
+
+    private Optional<BookModel> getBookModel(Optional<Book> bookEntity) {
+        return bookEntity.map(book -> mapping.toBookModel(bookEntity.get()));
     }
 
 }

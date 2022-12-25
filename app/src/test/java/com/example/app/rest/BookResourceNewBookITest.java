@@ -27,7 +27,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(locations = {"classpath:application-test.properties"})
-class BookResourceITest {
+class BookResourceNewBookITest {
 
     @Autowired private BookRepository bookRepository;
 

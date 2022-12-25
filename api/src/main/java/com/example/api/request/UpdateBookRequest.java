@@ -8,7 +8,7 @@ import javax.validation.constraints.Pattern;
 import java.util.Set;
 
 @Data
-public class NewBookRequest {
+public class UpdateBookRequest {
 
     @NotEmpty
     private String title;

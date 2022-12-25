@@ -2,6 +2,7 @@ package com.example.app.mapping;
 
 import com.example.api.request.Author;
 import com.example.api.request.NewBookRequest;
+import com.example.api.request.UpdateBookRequest;
 import com.example.api.response.NewBookResponse;
 import com.example.domain.model.AuthorModel;
 import com.example.domain.model.BookModel;
@@ -14,6 +15,8 @@ public interface ApplicationMapping {
 
     @Mapping(target = "id", ignore = true)
     BookModel toBookModel(NewBookRequest request);
+
+    BookModel toBookModel(Integer id, UpdateBookRequest request);
 
     AuthorModel toAuthorModel(Author author);
 

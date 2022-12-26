@@ -10,7 +10,7 @@ You need to install Docker and Java JDK 17 to build and run. Make sure to settin
 
 - `export JAVA_HOME=/PATH/TO/JDK/17`
 - `cd  book-catalog`
-- `./gradlew test jibDockerBuild`
+- `./gradlew clean test build --info`
 
 after successful gradle command, there is a new docker image on your system (mimdal/book-catalog image). 
 run following command to see local machine images

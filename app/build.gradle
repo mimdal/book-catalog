@@ -22,14 +22,15 @@ dependencyManagement {
 dependencies {
     implementation project(':api')
     implementation project(':domain')
-    implementation project(':infrastructure')
+    runtimeOnly project(':infrastructure')
+    testImplementation project(':infrastructure')
 
     compileOnly 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
 
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
 
-    implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+    compileOnly 'org.mapstruct:mapstruct:1.5.3.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -64,3 +65,5 @@ jib {
     }
 }
 jib.to.image = 'mimdal/book-catalog'
+
+build.finalizedBy(jibDockerBuild)
